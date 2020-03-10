@@ -14,6 +14,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 import java.util.Locale;
 
@@ -50,11 +51,19 @@ public class ConferenceConfig implements WebMvcConfigurer {
     }
 
     @Bean
+    public ViewResolver thymeleafViewResolver() {
+        ThymeleafViewResolver thymeleafViewResolver = new ThymeleafViewResolver();
+        thymeleafViewResolver.setTemplateEngine(templateEngine());
+        thymeleafViewResolver.setOrder(0);
+        return thymeleafViewResolver;
+    }
+
+    @Bean
     public ViewResolver viewResolver() {
         InternalResourceViewResolver bean = new InternalResourceViewResolver();
         bean.setPrefix("/WEB-INF/jsp/");
         bean.setSuffix(".jsp");
-        bean.setOrder(0);
+        bean.setOrder(1);
 
         return bean;
     }
